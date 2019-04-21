@@ -25,23 +25,35 @@
 #include <QSet>
 #include <QStringList>
 #include <QUuid>
+#include <QSharedPointer>
+
 
 class EntryAttributes : public QObject
 {
     Q_OBJECT
 
 public:
+    /**
+     * Attribute in-memory protection mode.
+     */
+    enum class ProtectionMode
+    {
+        None = 0,
+        Protect = 1,
+        Passthrough = 2
+    };
+
     explicit EntryAttributes(QObject* parent = nullptr);
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     QList<QString> customKeys() const;
-    QString value(const QString& key) const;
+    QString value(const QString& key, bool unprotect = true) const;
     QList<QString> values(const QList<QString>& keys) const;
     bool contains(const QString& key) const;
     bool containsValue(const QString& value) const;
     bool isProtected(const QString& key) const;
     bool isReference(const QString& key) const;
-    void set(const QString& key, const QString& value, bool protect = false);
+    void set(const QString& key, QString value, ProtectionMode protection = ProtectionMode::None);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
     void copyCustomKeysFrom(const EntryAttributes* other);
@@ -82,7 +94,7 @@ signals:
     void reset();
 
 private:
-    QMap<QString, QString> m_attributes;
+    QMap<QString, QByteArray> m_attributes;
     QSet<QString> m_protectedAttributes;
 };
 

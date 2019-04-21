@@ -29,6 +29,9 @@ public:
     static QString errorString();
     static QString debugInfo();
 
+    static QByteArray memEncryptValue(const QByteArray& value, bool* ok, QString* errorString = nullptr);
+    static QByteArray memDecryptValue(const QByteArray& value, bool* ok, QString* errorString = nullptr);
+
 private:
     Crypto();
     static bool checkAlgorithms();
@@ -45,6 +48,9 @@ private:
     static bool m_initialized;
     static QString m_errorStr;
     static QString m_backendVersion;
+
+    static char* memProtectKey;
+    static char* memProtectNonce;
 };
 
 #endif // KEEPASSX_CRYPTO_H
