@@ -54,6 +54,8 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
+      - libokpers-1-dev
+      - libakpers-1-dev
       - libsodium-dev
       - libargon2-0-dev
       - libqrencode-dev
@@ -63,6 +65,8 @@ parts:
       - qttranslations5-l10n # common translations
       - libgcrypt20
       - libykpers-1-1
+      - libokpers-1-1
+      - libakpers-1-1
       - libargon2-0
       - libsodium23
       - libxtst6
